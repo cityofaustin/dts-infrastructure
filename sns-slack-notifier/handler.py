@@ -90,7 +90,7 @@ def _format_slack_text(sns: dict[str, Any], parsed_message: Any) -> str:
         f"*Subject:* {subject}\n"
         f"*Topic:* `{topic_arn}`\n"
         f"*MessageId:* `{message_id}`\n"
-        f"*Message:*\n```{message_body}```"
+        f"*Message:*\n```\n{message_body}\n```"
     )
 
 
