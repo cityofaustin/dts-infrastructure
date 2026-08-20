@@ -1,6 +1,6 @@
 # dts-infrastructure
 
-Shared infrastructure tools for DTS. Each tool lives in its own directory with its own README.
+Infrastructure and deployment code for TPW Data & Technology Services' internal AWS tooling. Each tool lives in its own directory with its own README.
 
 ## Tools
 
