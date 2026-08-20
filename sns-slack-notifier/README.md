@@ -4,6 +4,8 @@ Python Lambda packaged as a container image. Subscribe it to an SNS topic; it po
 
 Set `SLACK_WEBHOOK_URL` to your Slack incoming webhook URL (the same URL used by the working `curl` command). Do not commit the webhook URL to git.
 
+The webhook URL is in 1Password: **AWS Notification Slack Bot** in the **dev** vault. The field name is `SLACK_WEBHOOK_URL`.
+
 ## Dev loop (build → push → update Lambda)
 
 Lambda runs `x86_64`, so on Apple Silicon build with `--platform linux/amd64`. Use `buildx` with `--push` so the image goes straight to ECR as a single-arch manifest Lambda accepts (`--provenance=false --sbom=false` avoids multi-arch attestation manifests).
@@ -35,6 +37,8 @@ aws lambda update-function-code \
 `update-function-code` is required even when reusing the `:latest` tag, so Lambda pulls the new digest.
 
 ## Testing locally
+
+For the `SLACK_WEBHOOK_URL` environment variable, please see above for more information.
 
 ```bash
 docker build -t sns-slack-notifier .
