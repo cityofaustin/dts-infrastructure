@@ -8,8 +8,9 @@ import os
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any
+from zoneinfo import ZoneInfo
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -30,12 +31,13 @@ def _format_alarm_time(raw_time: str | None) -> str:
             parsed = datetime.strptime(raw_time, "%Y-%m-%dT%H:%M:%S%z")
         except ValueError:
             return raw_time
-    utc = parsed.astimezone(timezone.utc)
-    hour12 = utc.hour % 12 or 12
-    ampm = "AM" if utc.hour < 12 else "PM"
+    central = parsed.astimezone(ZoneInfo("America/Chicago"))
+    hour12 = central.hour % 12 or 12
+    ampm = "AM" if central.hour < 12 else "PM"
+    tz_abbr = central.tzname() or "CT"
     return (
-        f"{utc.strftime('%B')} {utc.day}, {utc.year} "
-        f"at {hour12}:{utc.minute:02d}:{utc.second:02d} {ampm} UTC"
+        f"{central.strftime('%B')} {central.day}, {central.year} "
+        f"at {hour12}:{central.minute:02d}:{central.second:02d} {ampm} {tz_abbr}"
     )
 
 
